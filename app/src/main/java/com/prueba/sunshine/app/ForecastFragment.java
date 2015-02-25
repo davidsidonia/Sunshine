@@ -1,10 +1,12 @@
 package com.prueba.sunshine.app;
 
-import android.content.Context;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.text.format.Time;
 import android.util.Log;
@@ -17,7 +19,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,8 +32,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 /**
  * Encapsulates fetching the forecast and displaying it as a {@link ListView} layout.
  */
@@ -60,36 +59,37 @@ public class ForecastFragment extends Fragment {
 // Handle action bar item clicks here. The action bar will
 // automatically handle clicks on the Home/Up button, so long
 // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
-            FetchWeatherTask weatherTask = new FetchWeatherTask();
-            weatherTask.execute("94043");
+            updateWeather();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    private void updateWeather() {
+
+        FetchWeatherTask weatherTask = new FetchWeatherTask();
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String location = prefs.getString(getString(R.string.pref_location_key),
+                getString(R.string.pref_location_default));
+
+        weatherTask.execute(location);
+    }
+
+    public void onStart(){
+        super.onStart();
+        updateWeather();
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 // Create some dummy data for the ListView. Here's a sample weekly forecast
-        String[] data = {
-                "Lunes  soleado",
-                "Martes  soleado",
-                "Miercoles  soleado",
-                "Jueves  soleado",
-                "Viernes  soleado",
-                "Sabado  soleado",
-                "Domingo  soleado",
-                "Lunes  llueve",
-                "Martes  llueve",
-                "Miercoles  llueve",
-                "Jueves  llueve",
-                "Viernes  llueve",
-                "Sabado  llueve",
-                "Domingo  llueve"
-        };
-        List<String> weekForecast = new ArrayList<String>(Arrays.asList(data));
+
 // Now that we have some dummy forecast data, create an ArrayAdapter.
 // The ArrayAdapter will take data from a source (like our dummy forecast) and
 // use it to populate the ListView it's attached to.
@@ -98,7 +98,7 @@ public class ForecastFragment extends Fragment {
                         getActivity(), // The current context (this activity)
                         R.layout.list_item_forecast, // The name of the layout ID.
                         R.id.list_item_forecast_textview, // The ID of the textview to populate.
-                        weekForecast);
+                        new ArrayList<String>());
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 // Get a reference to the ListView, and attach this adapter to it.
         ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
