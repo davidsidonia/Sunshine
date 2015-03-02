@@ -32,34 +32,32 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
 /**
  * Encapsulates fetching the forecast and displaying it as a {@link ListView} layout.
  */
 public class ForecastFragment extends Fragment {
 
     private ArrayAdapter<String> mForecastAdapter;
-
     public ForecastFragment() {
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 // Add this line in order for this fragment to handle menu events.
         setHasOptionsMenu(true);
     }
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.forecastfragment, menu);
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 // Handle action bar item clicks here. The action bar will
 // automatically handle clicks on the Home/Up button, so long
 // as you specify a parent activity in AndroidManifest.xml.
-
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
             updateWeather();
@@ -67,15 +65,10 @@ public class ForecastFragment extends Fragment {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-// Create some dummy data for the ListView. Here's a sample weekly forecast
-
-// Now that we have some dummy forecast data, create an ArrayAdapter.
-// The ArrayAdapter will take data from a source (like our dummy forecast) and
+// The ArrayAdapter will take data from a source and
 // use it to populate the ListView it's attached to.
         mForecastAdapter =
                 new ArrayAdapter<String>(
@@ -87,47 +80,33 @@ public class ForecastFragment extends Fragment {
 // Get a reference to the ListView, and attach this adapter to it.
         ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(mForecastAdapter);
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                      //      <----------------------------------------------------------------------------------------------------------
-               // Context context = getActivity();
-               // String forecast = mForecastAdapter.getItem(position);
-              //  int duration = Toast.LENGTH_SHORT;
-
-              //  Toast toast = Toast.makeText(context, forecast, duration);
-               // toast.show();
-
                 String forecast = mForecastAdapter.getItem(position);
-
                 Intent intent = new Intent(getActivity(), DetailActivity.class)
-                .putExtra(Intent.EXTRA_TEXT,forecast);
+                        .putExtra(Intent.EXTRA_TEXT, forecast);
                 startActivity(intent);
-
             }
         });
         return rootView;
     }
 
+
     private void updateWeather() {
-
         FetchWeatherTask weatherTask = new FetchWeatherTask();
-
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String location = prefs.getString(getString(R.string.pref_location_key),
                 getString(R.string.pref_location_default));
-
         weatherTask.execute(location);
     }
-
-    public void onStart(){
+    @Override
+    public void onStart() {
         super.onStart();
         updateWeather();
     }
 
     public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
-
         private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
         /* The date/time conversion code is going to be moved outside the asynctask later,
         * so for convenience we're breaking it out into its own method now.

@@ -5,3 +5,4 @@
              android:layout_height="match_parent"
              tools:context="com.prueba.sunshine.app.DetailActivity"
              tools:ignore="MergeRootFrame"/>
+
