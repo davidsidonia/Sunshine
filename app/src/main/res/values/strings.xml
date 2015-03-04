@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <!--
-Used in Action Bar, and in AndroidManifest to tell the device the name of this app.
-It's to keep this short, so your launcher icon isn't displayed with "The greatest Wea"
-or something similar.
--->
+    Used in Action Bar, and in AndroidManifest to tell the device the name of this app.
+    It's to keep this short, so your launcher icon isn't displayed with "The greatest Wea"
+    or something similar.
+    -->
     <string name="app_name">Sunshine</string>
     <!--
     By convention, "action" denotes that this String will be used as the label for an Action,
@@ -36,5 +35,4 @@ or something similar.
     <string name="pref_units_metric" translatable="false">metric</string>
     <!-- Value in SharedPreferences for imperial temperature unit option [CHAR LIMIT=NONE] -->
     <string name="pref_units_imperial" translatable="false">imperial</string>
-
 </resources>

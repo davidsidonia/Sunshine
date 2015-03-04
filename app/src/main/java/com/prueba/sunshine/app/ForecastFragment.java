@@ -1,6 +1,5 @@
 package com.prueba.sunshine.app;
 
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -19,11 +18,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,12 +29,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
 /**
  * Encapsulates fetching the forecast and displaying it as a {@link ListView} layout.
  */
 public class ForecastFragment extends Fragment {
-
     private ArrayAdapter<String> mForecastAdapter;
     public ForecastFragment() {
     }
@@ -51,8 +46,6 @@ public class ForecastFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.forecastfragment, menu);
     }
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 // Handle action bar item clicks here. The action bar will
@@ -91,8 +84,6 @@ public class ForecastFragment extends Fragment {
         });
         return rootView;
     }
-
-
     private void updateWeather() {
         FetchWeatherTask weatherTask = new FetchWeatherTask();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -105,7 +96,6 @@ public class ForecastFragment extends Fragment {
         super.onStart();
         updateWeather();
     }
-
     public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
         private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
         /* The date/time conversion code is going to be moved outside the asynctask later,
