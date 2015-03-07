@@ -31,6 +31,9 @@
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.prueba.sunshine.app.MainActivity" />
+            <provider
+                android:authorities="com.prueba.sunshine.app"
+                android:name=".data.WeatherProvider" />
         </activity>
     </application>
 </manifest>
