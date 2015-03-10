@@ -9,5 +9,5 @@
                 tools:context="com.prueba.sunshine.app.DetailActivity.DetailFragment">
     <TextView android:layout_width="wrap_content"
               android:id="@+id/detail_text"
-              android:layout_height="wrap_content" />
+              android:layout_height="wrap_content"/>
 </RelativeLayout>
