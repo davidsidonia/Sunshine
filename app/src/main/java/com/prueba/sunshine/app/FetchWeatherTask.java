@@ -28,6 +28,7 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
         mContext = context;
     }
     private boolean DEBUG = true;
+
     /**
      * Helper method to handle insertion of a new location in the weather database.
      *
@@ -71,6 +72,8 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
 // Wait, that worked? Yes!
         return locationId;
     }
+
+
     /**
      * Take the String representing the complete forecast in JSON Format and
      * pull out the data we need to construct the Strings needed for the wireframes.
@@ -184,6 +187,8 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
             e.printStackTrace();
         }
     }
+
+
     @Override
     protected Void doInBackground(String... params) {
 // If there's no zip code, there's nothing to look up. Verify size of params.
